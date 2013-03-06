@@ -2,6 +2,8 @@ import time
 import re
 import operator
 import praw
+import sys
+import argparse
 
 r = praw.Reddit('Sr. Trends v0.1')
 words = []
@@ -28,13 +30,26 @@ def rank_words(words):
       print word
   print_words(sorted(h.iteritems(), key=operator.itemgetter(1), reverse=True))
 
-while True:
-    subreddit = r.get_subreddit('trees')
-    comments = subreddit.get_comments(limit=500)
-    for comment in  comments:
-        try: 
-          words.extend(comment.body.split())
-        except AttributeError:
-          print "comment with no body"
-    rank_words(words)
-    time.sleep(1800)
+
+def parse_args():
+  parser = argparse.ArgumentParser(description='Gets trending words in a subreddit.')
+  parser.add_argument('subreddit', metavar='subreddit', type=str,help='subreddit to scrape')
+  parser.add_argument('limit', type=int, default=100, help="limit amount of comments scraped (max 1000, default 100)")
+  args = parser.parse_args()
+  if (args.limit < 1) or (args.limit > 1000):
+    raise Exception("limit must be between 1 and 1000")
+  return args
+
+def main():
+  args = parse_args()
+  while True:
+      subreddit = r.get_subreddit(args.subreddit)
+      comments = subreddit.get_comments(limit=args.limit)
+      for comment in  comments:
+          try: 
+            words.extend(comment.body.split())
+          except AttributeError:
+            print "comment with no body"
+      rank_words(words)
+      time.sleep(1800)
+main()
