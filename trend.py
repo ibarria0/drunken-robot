@@ -4,9 +4,12 @@ import operator
 import praw
 import sys
 import argparse
+from nltk.corpus import stopwords
 
 r = praw.Reddit('Sr. Trends v0.1')
 words = []
+contractions = [ "dont", "cant","im", "didnt", "aint", "id", "ive"]
+
 
 class Word:
   def __init__(self, marker, raw):
@@ -16,6 +19,12 @@ class Word:
 def print_words(words):
   for word in words[:100]:
     print word[0] + " " +  str(word[1])
+
+def filter_comment(comment):
+  text = comment.body.lower()
+  words = re.sub("\. |,|;|: |'","" , text ).split()
+  important_words = filter(lambda x: x not in stopwords.words('english') and x not in contractions, words)
+  return important_words
 
 def rank_words(words):
   h = {}
@@ -47,7 +56,7 @@ def main():
       comments = subreddit.get_comments(limit=args.limit)
       for comment in  comments:
           try: 
-            words.extend(comment.body.split())
+            words.extend(filter_comment(comment))
           except AttributeError:
             print "comment with no body"
       rank_words(words)
