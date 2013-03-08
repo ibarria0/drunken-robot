@@ -51,14 +51,13 @@ def parse_args():
 
 def main():
   args = parse_args()
-  while True:
-      subreddit = r.get_subreddit(args.subreddit)
-      comments = subreddit.get_comments(limit=args.limit)
-      for comment in  comments:
-          try: 
-            words.extend(filter_comment(comment))
-          except AttributeError:
-            print "comment with no body"
-      rank_words(words)
-      time.sleep(1800)
+  subreddit = r.get_subreddit(args.subreddit)
+  comments = subreddit.get_comments(limit=args.limit)
+  for comment in  comments:
+      try: 
+        words.extend(filter_comment(comment))
+      except AttributeError:
+        print "comment with no body"
+  rank_words(words)
+
 main()
