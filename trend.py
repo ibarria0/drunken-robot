@@ -31,8 +31,8 @@ def rank_words(words):
   for word in words:
     try:
       if h.has_key(word):
-        v = h.get(word)
-        h.update({word: v + 1})
+        v = h.get(word)          #get current counter
+        h.update({word: v + 1})  #increment counter
       else:
         h.update({word: 1}) 
     except KeyError:
