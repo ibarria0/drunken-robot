@@ -17,7 +17,7 @@ Example
 -------------------------------------
 
 
-    python drunken-robot.py ubuntu 500
+    python drunken-robot.py ubuntu 50
     ############################################
     Bot status
     Total Words: 1714
