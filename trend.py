@@ -5,6 +5,7 @@ import praw
 import sys
 import argparse
 from nltk.corpus import stopwords
+import nltk
 
 r = praw.Reddit('Sr. Trends v0.1')
 words = []
@@ -21,7 +22,7 @@ def print_words(words):
     print word[0] + " " +  str(word[1])
 
 def filter_comment(comment):
-  text = comment.body.lower()
+  text = comment.body.lower().encode('ascii', 'ignore')
   words = re.sub("\. |,|;|: |'","" , text ).split()
   important_words = filter(lambda x: x not in stopwords.words('english') and x not in contractions, words)
   return important_words
@@ -58,6 +59,7 @@ def main():
         words.extend(filter_comment(comment))
       except AttributeError:
         print "comment with no body"
-  rank_words(words)
+  print nltk.FreqDist(words)
+
 
 main()
