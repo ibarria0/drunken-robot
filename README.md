@@ -1,7 +1,8 @@
 Drunken-robot (Reddit Comment Analyzer)
 =======================================
 
-For now it only counts recurring words.
+For now it only counts recurring words and urls.
+
 Possible expansion is to do lex/mood analysis.
 
 
@@ -11,12 +12,30 @@ Features
 
 
 
+
 Example
 -------------------------------------
 
 
-    python trend.py ubuntu 1000
+    python drunken-robot.py ubuntu 500
+    ############################################
+    Bot status
+    Total Words: 1714
+    Total Comments: 50
+    Total Urls: 2
+    ############################################
+    like 22
+    linux 21
+    people 18
+    use 16
+    ...
+    ...
+    ...
+    years 2
+    http://www.gnu.org/philosophy/nonfree-games.html 1
+    https://en.wikipedia.org/wiki/fluxbox). 1
 
+    
     ubuntu 338
     linux 167
     would 164
