@@ -30,7 +30,7 @@ class Bot:
   def filter_comment(self,comment):
     text = comment.body.lower().encode('ascii', 'ignore')
     urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
-    words = re.sub("\. |,|;|: |'|\!|\?","" , text ).split()
+    words = re.sub("\.|,|;|:|'|\*|-|!|\?|\"|[)]|[(]","" , text ).split()
     important_words = filter(lambda x: x not in stopwords.words('english') and x not in extra_stopwords, words)
     self.words.extend(important_words)
     self.urls.extend(urls)
