@@ -1,5 +1,6 @@
 import sys
 import argparse
+import signal
 
 from Bot import Bot
 
@@ -15,6 +16,12 @@ def parse_args():
   parser.add_argument('limit', type=int, default=100, help="limit amount of comments scraped (max 1000, default 100)")
   return validate_args(parser.parse_args())
 
+def signal_handler(signal, frame):
+  print bot.status()
+  sys.exit(0)
+
 args = parse_args()
 bot = Bot(args.subreddit,args.limit)
+signal.signal(signal.SIGINT, signal_handler)
 bot.start()
+signal.pause()

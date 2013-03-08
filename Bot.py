@@ -55,8 +55,17 @@ class Bot:
     for url,times in nltk.FreqDist(self.urls).items():
       print url + " " + str(times)
 
+
+  def status_short(self):
+    print "short status report:"
+    for word,times in nltk.FreqDist(self.words).items()[:10]:
+      if (times > 1):
+        print word + " " +  str(times)
+    for url,times in nltk.FreqDist(self.urls).items()[:5]:
+      print url + " " + str(times)
+
   def start(self):
     while True:
       self.crunch_comments()
-      self.status()
+      self.status_short()
       time.sleep(1800)
