@@ -9,9 +9,9 @@ import nltk
 
 r = praw.Reddit('Sr. Trends v0.1')
 contractions = [ "dont", "cant","im", "didnt", "aint", "id", "ive"]
-global args
 
 def parse_args():
+  global args
   parser = argparse.ArgumentParser(description='Gets trending words in a subreddit.')
   parser.add_argument('subreddit', metavar='subreddit', type=str,help='subreddit to scrape')
   parser.add_argument('limit', type=int, default=100, help="limit amount of comments scraped (max 1000, default 100)")
@@ -35,6 +35,7 @@ def filter_comment(comment):
 
 def main():
   parse_args()
+  words = []
   subreddit = r.get_subreddit(args.subreddit)
   comments = subreddit.get_comments(limit=args.limit)
   for comment in  comments:
