@@ -36,8 +36,8 @@ class Bot:
     self.words.extend(important_words)
     self.urls.extend(urls)
   
-  def crunch_comments(self):
-    for comment in self.scrape_comments():
+  def crunch_comments(self,comments):
+    for comment in comments:
       if (comment.id not in self.already_done):
         self.filter_comment(comment)
         self.already_done.append(comment.id)
@@ -66,6 +66,6 @@ class Bot:
 
   def start(self):
     while True:
-      self.crunch_comments()
+      self.crunch_comments(self.scrape_comments())
       self.status_short()
       time.sleep(100)
