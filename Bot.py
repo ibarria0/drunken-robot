@@ -3,6 +3,7 @@ import nltk
 import time
 import re
 import operator
+import sys
 import praw
 
 extra_stopwords = ["wont","would","youve","youre","dont", "cant","im", "didnt", "aint", "id", "ive"]
@@ -55,7 +56,6 @@ class Bot:
     for url,times in nltk.FreqDist(self.urls).items():
       print url + " " + str(times)
 
-
   def status_short(self):
     print "short status report:"
     for word,times in nltk.FreqDist(self.words).items()[:10]:
@@ -68,4 +68,4 @@ class Bot:
     while True:
       self.crunch_comments()
       self.status_short()
-      time.sleep(1800)
+      time.sleep(100)
